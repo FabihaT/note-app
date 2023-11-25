@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+// Layout.js
+import React, { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import NoteList from "./NoteList";
 import { v4 as uuidv4 } from "uuid";
@@ -13,6 +14,8 @@ function Layout() {
   const [notes, setNotes] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [currentNote, setCurrentNote] = useState(-1);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const height = mainContainerRef.current.offsetHeight;
@@ -73,6 +76,17 @@ function Layout() {
     setCurrentNote(0);
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const handleSearchToggle = () => {
+    setShowSearch(!showSearch);
+    if (showSearch) {
+      setSearchQuery(""); // Reset search query when toggling off
+    }
+  };
+
   return (
     <div id="container">
       <header>
@@ -97,10 +111,24 @@ function Layout() {
               <button id="new-note-button" onClick={addNote}>
                 +
               </button>
+              <button style={{ transform: "rotate(-90deg)" }}
+                onClick={() => setShowSearch(handleSearchToggle)}
+                dangerouslySetInnerHTML={{
+                  __html: showSearch ? "✖" : "&#x1F50E;&#xFE0E;",
+                }}
+              />
+              {showSearch && (
+                <input
+                  type="text"
+                  placeholder="Search notes..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearch(e.target.value)}
+                />
+              )}
             </div>
           </header>
           <div id="notes-holder">
-            <NoteList notes={notes} />
+            <NoteList notes={notes} searchQuery={searchQuery} />
           </div>
         </aside>
         <div id="write-box">

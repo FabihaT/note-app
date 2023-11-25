@@ -9,7 +9,7 @@ const trimDescription = (description, maxLength = max) => {
     : description;
 };
 
-function NoteItem({ note, index, updateNote }) {
+function NoteItem({ note, index }) {
   return (
     <li className="note-item" key={`note-item-${index}`}>
       <NavLink to={`/notes/${index + 1}`}>

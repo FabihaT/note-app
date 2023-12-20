@@ -17,3 +17,5 @@ With the search icon, you can easily search the title or body of your notes and 
 
 5. Delete your notes:
 Remove any old notes you don't need anymore with the "Delete" button.
+
+https://fabihat-noteapp.netlify.app/ 
